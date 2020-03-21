@@ -1,0 +1,13 @@
+.top {
+    background: $color-background-grey;
+    height: 120px;
+    margin: 0px auto;
+    display: flex;
+    justify-content: center;
+
+    h2 {
+        @extend %text-subtitle;
+        color: $color-text-dark;
+        margin: 45px 0 45px 75px;
+    }
+}

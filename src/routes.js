@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom'
 
 //Pages
-import Home from 'containers/Home'
+import Home from 'pages/Home'
 
 class Routes extends React.Component {
     render() {

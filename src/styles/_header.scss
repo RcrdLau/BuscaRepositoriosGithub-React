@@ -1,0 +1,28 @@
+.header {
+    background: $color-primary;
+    margin: 0px auto;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+
+    svg {
+        fill: $color-background-light;
+        cursor: pointer;
+        margin: 15px;
+    }
+    svg:hover {
+        fill: $color-background-grey;
+    }
+
+    h1 {
+        color: $color-text-white;
+        cursor: pointer;
+        margin: 15px;
+        @extend %text-title;
+        letter-spacing: 1px;
+    }
+    h1:hover {
+        color: $color-background-grey;
+    }
+
+}

@@ -1,0 +1,34 @@
+.body {
+    margin: 0px auto;
+    display: flex;
+    justify-content: center;
+
+    .submit-lente {
+        position:absolute;
+        top:0; right:0;
+        z-index:10;
+        border:none;
+        background:transparent;
+        outline:none;
+      }
+      
+      .submit-line {
+        position: relative;
+        width: 200px;
+      }
+      
+      .submit-line input {
+        width: 100%;
+      }
+
+    
+    input {
+        margin: 30px 0 30px 70px;
+        width: 300px;
+        height: 30px;
+        border-radius: 8px;
+        border: 2px solid $color-text-primary;
+        color: $color-text-primary;
+        outline: none;
+    }
+}
