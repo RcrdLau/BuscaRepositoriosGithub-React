@@ -8,6 +8,6 @@
     h2 {
         @extend %text-subtitle;
         color: $color-text-dark;
-        margin: 45px 0 45px 75px;
+        margin: 45px 0 45px 0;//arrumar o espaço
     }
 }

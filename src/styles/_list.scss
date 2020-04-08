@@ -1,0 +1,46 @@
+.list-container {
+    margin: 60px auto 0;
+    max-width: 900px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;;
+    flex-wrap: wrap;
+    list-style-type: none;
+
+        li {
+            display: flex;
+            border: 1px solid grey;
+            border-radius: 8px;
+            margin: 5px;
+            flex: 1;
+            max-width: 438px;
+            min-width: 380px;
+            max-height: 100px;
+            cursor: pointer;
+            .profile-avatar {
+                flex: 1 1 30%;
+                min-width: 60px;
+                max-width: 60px;
+                min-height: 60px;
+                max-height: 60px;
+                background-color: grey;
+                border-radius: 100%;
+                margin: 20px;
+            }
+            .profile-infos {
+                flex: 1 1 70%;
+                margin: 10px 20px 0 0;
+                h2 {
+                    margin-bottom: 20px;
+                }
+                
+                p{
+                    
+                }
+            }
+            
+        }
+    
+}
+
+
