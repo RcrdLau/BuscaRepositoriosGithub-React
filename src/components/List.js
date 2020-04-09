@@ -4,93 +4,108 @@ import axios from 'axios'
 const List = () => {
 
     const [list, setList] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
+    const [isError, setIsError] = useState(null)
 
-    const searchRepositories = () => {
-        axios.get('url')
+    const searchRepositories = (e) => {
+        e.preventDefault()
+
+        setIsError(null)
+        setIsLoading(true)
+
+        // Promise.all([
+        //     api.get('/users/diego3g'),
+        //     api.get('/phones/diego3g'),
+        //   ]).then([user, phones] => {
+        //     console.log(user);
+        //     console.log(phones);
+        //   });
+
+        let finalList = []
+
+        axios
+            .get('https://api.github.com/users/rcrdlau/repos')
             .then(response => {
                 console.log(response)
-                setList(response.data)
+                console.log("entrou get")
+                let data = response.data
+
+                if (data.length > 0) {
+                    console.log("antes for")
+                    data.forEach(element => {
+                        console.log("dentro for", element)
+                        finalList.push({
+                            avatar: element.owner.avatar_url,
+                            name: element.owner.login,
+                            repo: element.name,
+                        })
+                    })
+                    console.log("final list> ", finalList)
+                    setList(finalList)
+                } else {
+                    setIsError("não achamos nada na sua busca")
+                }
+            })
+            .catch(() => {
+                setIsError("deu algum problema na requisiçao")
+                console.log("entrou catch")
+            })  
+            .finally(() => {
+                setIsLoading(false)
+                console.log("entrou finally")
             })
     }
 
-    const renderList = (list) => {
-        return list.map(item => (
-            <li>
-                <img src={item.avatar} className="profile-avatar" />
-                <div className="profile-infos">
-                    <h2>{item.Name}</h2>
-                    <p>{item.repName}</p>
-                </div>
-            </li>
-        ))
+    const renderLoader = () => {
+        if (isLoading){
+            return(
+                <p>loading...</p>
+            )
+        }
+    }
+    const renderError = () => {
+        if (isError != null){
+            return(
+                <p>{isError}</p>
+            )
+        }
     }
 
-    // const mock = {
-    //     profile1: [
-    //         avatar = "foto",
-    //         nome = "A",
-    //         repositorio = "Conqueor"
-    //     ],
-    //     profile2: [
-    //         avatar = "foto",
-    //         nome = "B",
-    //         repositorio = "Eletrocutar"
-    //     ],
-    //     profile3: [
-    //         avatar = "foto",
-    //         nome = "C",
-    //         repositorio = "Impeto"
-    //     ],
-    // }
+    const renderList = () => {
+        if (!isLoading && !isError) {
+            return list.map(item => (
+                <li>
+                    <img src={item.avatar} className="profile-avatar" />
+                    <div className="profile-infos">
+                        <h2>{item.name}</h2>
+                        <p>{item.repo}</p>
+                    </div>
+                </li>
+            ))
+        }
+    }
 
     return (
-        <section >
-            <ul className="list-container">
-                <li>
-                    <img className="profile-avatar" />
-                    <div className="profile-infos">
-                        <h2>Fulano</h2>
-                        <p>Projeto de React</p>
-                    </div>
-                </li>
-                <li>
-                    <img className="profile-avatar" />
-                    <div className="profile-infos">
-                        <h2>Fulano</h2>
-                        <p>Projeto de React</p>
-                    </div>
-                </li>
-                <li>
-                    <img className="profile-avatar" />
-                    <div className="profile-infos">
-                        <h2>Fulano</h2>
-                        <p>Projeto de React</p>
-                    </div>
-                </li>
-                <li>
-                    <img className="profile-avatar" />
-                    <div className="profile-infos">
-                        <h2>Fulano</h2>
-                        <p>Projeto de React</p>
-                    </div>
-                </li>
-                <li>
-                    <img className="profile-avatar" />
-                    <div className="profile-infos">
-                        <h2>Fulano</h2>
-                        <p>Projeto de React</p>
-                    </div>
-                </li>
-            </ul>
-            
-        </section>
+        <>
+            <section className="body">
+            <div className="submit-line">
+                <form onSubmit={searchRepositories} >
+                    <button className="submit-lente" type="submit">
+                        <span><i class="fa fa-search"></i></span>
+                    </button>
+                    <input type="search" id="busca" name="search"/>
+                </form>
+            </div>
+            </section>
+            <section >
+                {renderError()}
+                {renderLoader()}
+                <ul className="list-container">
+                    {renderList()}
+                </ul>      
+            </section>
+        </>
     )
 }
 
 export default List
-
-// const tarefas = ["Acordar", "Tomar café", "Escovar os dentes", "Ir trabalhar"];
-// 	return (
-// 		<ul>
-// 			{ tarefas.map(tarefa => <li>{ tarefa }</li>) }
-// 		</ul>
