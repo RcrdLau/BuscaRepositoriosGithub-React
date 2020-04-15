@@ -20,11 +20,13 @@ const List = () => {
         //     console.log(user);
         //     console.log(phones);
         //   });
-
+        let searchReturned = 0
+        searchReturned = document.getElementById("busca").value
+        console.log("retorno escrito: ", searchReturned)
         let finalList = []
 
         axios
-            .get('https://api.github.com/users/rcrdlau/repos')
+            .get(`https://api.github.com/users/${searchReturned}/repos`)
             .then(response => {
                 console.log(response)
                 console.log("entrou get")
@@ -38,6 +40,7 @@ const List = () => {
                             avatar: element.owner.avatar_url,
                             name: element.owner.login,
                             repo: element.name,
+                            link: element.html_url
                         })
                     })
                     console.log("final list> ", finalList)
@@ -74,13 +77,15 @@ const List = () => {
     const renderList = () => {
         if (!isLoading && !isError) {
             return list.map(item => (
+            <a href={item.link}>
                 <li>
                     <img src={item.avatar} className="profile-avatar" />
                     <div className="profile-infos">
                         <h2>{item.name}</h2>
                         <p>{item.repo}</p>
                     </div>
-                </li>
+                </li>   
+            </a>
             ))
         }
     }
