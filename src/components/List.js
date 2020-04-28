@@ -26,15 +26,16 @@ const List = () => {
         let finalList = []
 
         axios
-            .get(`https://api.github.com/users/${searchReturned}/repos`)
+            // .get(`https://api.github.com/users/${searchReturned}/repos`)
+            .get(`https://api.github.com/search/repositories?q=${searchReturned}+language:assembly&sort=stars&order=desc`)
             .then(response => {
                 console.log(response)
                 console.log("entrou get")
                 let data = response.data
 
-                if (data.length > 0) {
+                if (data.items.length > 0) {
                     console.log("antes for")
-                    data.forEach(element => {
+                    data.items.forEach(element => {
                         console.log("dentro for", element)
                         finalList.push({
                             avatar: element.owner.avatar_url,
@@ -62,14 +63,14 @@ const List = () => {
     const renderLoader = () => {
         if (isLoading){
             return(
-                <p>loading...</p>
+                <p className="message load">loading...</p>
             )
         }
     }
     const renderError = () => {
         if (isError != null){
             return(
-                <p>{isError}</p>
+                <p className="message">{isError}</p>
             )
         }
     }
@@ -79,7 +80,7 @@ const List = () => {
             return list.map(item => (
             <a href={item.link}>
                 <li>
-                    <img src={item.avatar} className="profile-avatar" />
+                    <img src={item.avatar} className="profile-avatar" alt="imagem de perfil" />
                     <div className="profile-infos">
                         <h2>{item.name}</h2>
                         <p>{item.repo}</p>
@@ -102,7 +103,7 @@ const List = () => {
                 </form>
             </div>
             </section>
-            <section >
+            <section>
                 {renderError()}
                 {renderLoader()}
                 <ul className="list-container">
